@@ -13,8 +13,9 @@ if(isset($_POST['addnewbarang'])){
     $namabarang = $_POST['namabarang'];
     $deskripsi = $_POST['deskripsi'];
     $stock = $_POST['stock'];
+    $hargaperunit = $_POST['hargabarang'];
 
-    $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock) values('$namabarang', '$deskripsi', '$stock')");
+    $addtotable = mysqli_query($conn,"insert into stock (namabarang, deskripsi, stock,hargabarang) values('$namabarang', '$deskripsi', '$stock','$hargaperunit')");
     if($addtotable){
         header('location:index.php');
     } else {
@@ -74,8 +75,9 @@ if(isset($_POST['updatebarang'])){
     $idb = $_POST['idb'];
     $namabarang = $_POST['namabarang'];
     $deskripsi = $_POST['deskripsi'];
+    $hargabarang = $_POST['hargabarang'];
 
-    $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi' where idbarang='$idb'");
+    $update = mysqli_query($conn,"update stock set namabarang='$namabarang', deskripsi='$deskripsi', hargabarang='$hargabarang' where idbarang='$idb'");
     if($update){
         header('location:index.php');
     } else {

@@ -57,6 +57,17 @@ require 'function.php';
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                                 Tambah
                             </button>
+                            <br>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <form method="post" class="form-inline">
+                                        <input type="date" name="tglmulai" class="form-control">
+                                        <input type="date" name="tglselesai" class="form-control ml-3">
+                                        <button type="submit" name="filtertgl" class="btn btn-info ml-3">filter</button>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -65,8 +76,10 @@ require 'function.php';
                                         <tr>
                                             <th>Tanggal</th>
                                             <th>Nama Barang</th>
-                                            <th>Jumlah</th>
                                             <th>Keterangan</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga Per Unit</th>
+                                            <th>Harga Total</th>
                                             <th>Aksi</th>
 
                                         </tr>
@@ -74,7 +87,21 @@ require 'function.php';
                                     <tbody>
 
                                         <?php
-                                            $ambilsemuadatastock = mysqli_query($conn,"select * from masuk m, stock s where s.idbarang = m.idbarang");
+                                            if(isset($_POST['filtertgl'])){
+                                                $tglmulai = $_POST['tglmulai'];
+                                                $tglselesai = $_POST['tglselesai'];
+
+                                                if($tglmulai!=null || $tglselesai!=null){
+                                                    $ambilsemuadatastock = mysqli_query($conn,"select * from masuk m, stock s where s.idbarang = m.idbarang and m.tanggal between '$tglmulai' and '$tglselesai' order by m.idmasuk DESC");
+                                                    
+                                                }else{
+                                                    $ambilsemuadatastock = mysqli_query($conn,"select * from masuk m, stock s where s.idbarang = m.idbarang order by m.idmasuk DESC");
+                                                }
+                                            } else{
+                                                $ambilsemuadatastock = mysqli_query($conn,"select * from masuk m, stock s where s.idbarang = m.idbarang order by m.idmasuk DESC");
+                                            }
+
+                                            
                                             while ($data=mysqli_fetch_array($ambilsemuadatastock)){
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
@@ -82,13 +109,20 @@ require 'function.php';
                                                 $keterangan = $data['keterangan'];
                                                 $idb = $data['idbarang'];
                                                 $idm = $data['idmasuk'];
+                                                $hargaperunit = $data['hargabarang'];
+
+                                                $hargatotal = $hargaperunit * $qty;
                                                 
                                             ?>
                                         <tr>
                                             <td><?=$tanggal;?></td>
                                             <td><?=$namabarang;?></td>
-                                            <td><?=$qty;?></td>
                                             <td><?=$keterangan;?></td>
+                                            <td><?=$qty;?></td>
+                                            <td>Rp <?=number_format($hargaperunit, 2, ',', '.');?></td>
+                                            <!-- Menampilkan harga per unit dengan format Rupiah -->
+                                            <td>Rp <?=number_format($hargatotal, 2, ',', '.');?></td>
+                                            <!-- Menampilkan harga total dengan format Rupiah -->
                                             <td>
                                                 <button type="button" class="btn btn-warning" data-toggle="modal"
                                                     data-target="#edit<?=$idm?>">
@@ -100,6 +134,8 @@ require 'function.php';
                                                 </button>
                                             </td>
                                         </tr>
+
+
                                         <!-- Edit Modal -->
                                         <div class="modal fade" id="edit<?=$idm?>">
                                             <div class="modal-dialog">
@@ -167,6 +203,23 @@ require 'function.php';
 
                                     </tbody>
                                 </table>
+                                <?php
+                                    $totalharga = 0;
+                                    $ambilsemuadatastock = mysqli_query($conn,"SELECT m.qty, s.hargabarang
+                                            FROM masuk m
+                                            JOIN stock s ON m.idbarang = s.idbarang");
+                                    while ($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                    $qty = $data['qty'];
+                                    $hargaperunit = $data['hargabarang'];
+
+                                    $hargatotal = $hargaperunit * $qty;
+                                    $totalharga += $hargatotal;
+                                    }
+                                ?>
+
+                                <h5 class="pt-2">
+                                    Total Harga Semua Barang Masuk: Rp <?=number_format($totalharga, 2, ',', '.');?>
+                                </h5>
                             </div>
                         </div>
                     </div>

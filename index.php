@@ -57,34 +57,34 @@ require 'function.php';
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                                 Tambah
                             </button>
+                            <a href="export.php" class="btn btn-info">Export</a>
                         </div>
                         <div class="card-body">
                             <?php
-$ambildatastock = mysqli_query($conn, 'SELECT * FROM stock');
-while ($fetch = mysqli_fetch_array($ambildatastock)) {
-    $barang = $fetch['namabarang'];
-    $stock = $fetch['stock'];
+                            $ambildatastock = mysqli_query($conn, 'SELECT * FROM stock');
+                            while ($fetch = mysqli_fetch_array($ambildatastock)) {
+                                $barang = $fetch['namabarang'];
+                                $stock = $fetch['stock'];
 
-    if ($stock < 10 && $stock > 0) { // Stock is less than 10 but still greater than 0
-?>
+                                if ($stock < 10 && $stock > 0) { // Stock is less than 10 but still greater than 0
+                            ?>
                             <!-- Alert for low stock -->
                             <div class="alert alert-warning alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <strong>Perhatian!</strong> Stock Barang <?=$barang;?> Hampir Habis
                             </div>
                             <?php
-    } elseif ($stock <= 0) { // Stock is 0 or less (out of stock)
-?>
+                                } elseif ($stock <= 0) { // Stock is 0 or less (out of stock)
+                            ?>
                             <!-- Alert for out of stock -->
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <strong>Perhatian!</strong> Barang <?=$barang;?> Sudah Habis
                             </div>
                             <?php
-    }
-}
-?>
-
+                                }
+                            }
+                            ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -107,7 +107,7 @@ while ($fetch = mysqli_fetch_array($ambildatastock)) {
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $stock = $data['stock'];
-                                                $hargaperunit = $data['hargaperunit'];
+                                                $hargaperunit = $data['hargabarang'];
                                                 $idb = $data['idbarang'];
 
                                                 $hargatotal = $hargaperunit * $stock;
@@ -153,6 +153,9 @@ while ($fetch = mysqli_fetch_array($ambildatastock)) {
                                                             <input type="text" name="deskripsi" value="<?=$deskripsi?>"
                                                                 class="form-control">
                                                             <br>
+                                                            <input type="number" name="hargabarang" class="form-control"
+                                                                value="<?=$hargaperunit?>" required>
+                                                            <br>
                                                             <input type="hidden" name="idb" value="<?=$idb?>">
 
                                                             <button type="submit" class="btn btn-primary"
@@ -196,11 +199,30 @@ while ($fetch = mysqli_fetch_array($ambildatastock)) {
                                             ?>
 
                                     </tbody>
+
                                 </table>
+                                <?php
+                                    $totalharga = 0;
+                                    $ambilsemuadatastock = mysqli_query($conn,"select * from stock");
+                                    while ($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                    $stock = $data['stock'];
+                                    $hargaperunit = $data['hargabarang'];
+
+                                    $hargatotal = $hargaperunit * $stock;
+                                    $totalharga += $hargatotal;
+                                    }
+                                ?>
+
+                                <h5 class="pt-2">
+                                    Total Harga Semua Barang Stock: Rp <?=number_format($totalharga, 2, ',', '.');?>
+                                </h5>
+
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
@@ -247,6 +269,8 @@ while ($fetch = mysqli_fetch_array($ambildatastock)) {
                     <input type="text" name="deskripsi" placeholder="Deskripsi barang" class="form-control">
                     <br>
                     <input type="number" name="stock" class="form-control" placeholder="Jumlah" required>
+                    <br>
+                    <input type="number" name="hargabarang" class="form-control" placeholder="Harga" required>
                     <br>
                     <button type="submit" class="btn btn-primary" name="addnewbarang">Submit</button>
                 </div>
