@@ -59,6 +59,23 @@ require 'function.php';
                             </button>
                         </div>
                         <div class="card-body">
+                            <?php 
+                                $ambildatastock = mysqli_query($conn,'select * from stock where stock < 10'); ;
+                                while ($fetch = mysqli_fetch_array($ambildatastock)){
+                                    $barang = $fetch['namabarang'];
+                                
+                            ?>
+
+                            <!-- Alert -->
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Perhatian!</strong> Stock Barang <?=$barang;?> Hampir Habis
+                            </div>
+
+                            <?php
+}
+                           ?>
+
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>

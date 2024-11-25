@@ -91,17 +91,17 @@ require 'function.php';
                                             <td><?=$keterangan;?></td>
                                             <td>
                                                 <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                    data-target="#edit<?=$idb?>">
+                                                    data-target="#edit<?=$idm?>">
                                                     Edit
                                                 </button>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#delete<?=$idb?>">
+                                                    data-target="#delete<?=$idm?>">
                                                     Delete
                                                 </button>
                                             </td>
                                         </tr>
                                         <!-- Edit Modal -->
-                                        <div class="modal fade" id="edit<?=$idb?>">
+                                        <div class="modal fade" id="edit<?=$idm?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
@@ -132,7 +132,7 @@ require 'function.php';
                                         </div>
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="delete<?=$idb?>">
+                                        <div class="modal fade" id="delete<?=$idm?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 

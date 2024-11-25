@@ -66,6 +66,7 @@ require 'function.php';
                                             <th>Nama Barang</th>
                                             <th>Jumlah</th>
                                             <th>Penerima</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,6 +74,8 @@ require 'function.php';
                                         <?php
                                             $ambilsemuadatastock = mysqli_query($conn,"select * from keluar k, stock s where s.idbarang = k.idbarang");
                                             while ($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                                $idb =$data ["idbarang"];
+                                                $idk =$data ["idkeluar"];
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $qty = $data['qty'];
@@ -84,6 +87,16 @@ require 'function.php';
                                             <td><?=$namabarang;?></td>
                                             <td><?=$qty;?></td>
                                             <td><?=$penerima;?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#edit<?=$idk?>">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#delete<?=$idk?>">
+                                                    Delete
+                                                </button>
+                                            </td>
                                         </tr>
                                         <?php
                                             };
@@ -158,8 +171,60 @@ require 'function.php';
                     <button type="submit" class="btn btn-primary" name="addbarangkeluar">Submit</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="edit<?=$idk?>">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Barang</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
+            <!-- Modal body -->
+            <form method="post">
+                <div class="modal-body">
+                    <input type="text" name="penerima" value="<?=$penerima?>" class="form-control">
+                    <br>
+                    <input type="number" name="qty" value="<?=$qty?>" class="form-control" required>
+                    <br>
+                    <input type="hidden" name="idb" value="<?=$idb?>">
+                    <input type="hidden" name="idk" value="<?=$idk?>">
+                    <button type="submit" class="btn btn-primary" name="updatebarangkeluar">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="delete<?=$idk?>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Hapus Barang</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <form method="post">
+                <div class="modal-body">
+                    <div class="pb-1">Apakah Anda yakin ingin menghapus
+                        <?=$namabarang?>?
+                    </div>
+                    <br><br>
+                    <input type="hidden" name="idb" value="<?=$idb?>">
+                    <input type="hidden" name="idk" value="<?=$idk?>">
+                    <input type="hidden" name="kty" value="<?=$qty?>">
+                    <button type="submit" class="btn btn-danger" name="hapusbarangkeluar">Hapus</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
