@@ -59,22 +59,31 @@ require 'function.php';
                             </button>
                         </div>
                         <div class="card-body">
-                            <?php 
-                                $ambildatastock = mysqli_query($conn,'select * from stock where stock < 10'); ;
-                                while ($fetch = mysqli_fetch_array($ambildatastock)){
-                                    $barang = $fetch['namabarang'];
-                                
-                            ?>
+                            <?php
+$ambildatastock = mysqli_query($conn, 'SELECT * FROM stock');
+while ($fetch = mysqli_fetch_array($ambildatastock)) {
+    $barang = $fetch['namabarang'];
+    $stock = $fetch['stock'];
 
-                            <!-- Alert -->
-                            <div class="alert alert-danger alert-dismissible">
+    if ($stock < 10 && $stock > 0) { // Stock is less than 10 but still greater than 0
+?>
+                            <!-- Alert for low stock -->
+                            <div class="alert alert-warning alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <strong>Perhatian!</strong> Stock Barang <?=$barang;?> Hampir Habis
                             </div>
-
                             <?php
+    } elseif ($stock <= 0) { // Stock is 0 or less (out of stock)
+?>
+                            <!-- Alert for out of stock -->
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Perhatian!</strong> Barang <?=$barang;?> Sudah Habis
+                            </div>
+                            <?php
+    }
 }
-                           ?>
+?>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
