@@ -93,6 +93,8 @@ while ($fetch = mysqli_fetch_array($ambildatastock)) {
                                             <th>Nama Barang</th>
                                             <th>Deskripsi</th>
                                             <th>Stock</th>
+                                            <th>Harga Per Unit</th>
+                                            <th>Harga Total</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -105,13 +107,20 @@ while ($fetch = mysqli_fetch_array($ambildatastock)) {
                                                 $namabarang = $data['namabarang'];
                                                 $deskripsi = $data['deskripsi'];
                                                 $stock = $data['stock'];
+                                                $hargaperunit = $data['hargaperunit'];
                                                 $idb = $data['idbarang'];
+
+                                                $hargatotal = $hargaperunit * $stock;
                                             ?>
                                         <tr>
                                             <td><?=$i++;?></td>
                                             <td><?=$namabarang;?></td>
                                             <td><?=$deskripsi;?></td>
                                             <td><?=$stock;?></td>
+                                            <td>Rp <?=number_format($hargaperunit, 2, ',', '.');?></td>
+                                            <!-- Menampilkan harga per unit dengan format Rupiah -->
+                                            <td>Rp <?=number_format($hargatotal, 2, ',', '.');?></td>
+                                            <!-- Menampilkan harga total dengan format Rupiah -->
                                             <td>
                                                 <button type="button" class="btn btn-warning" data-toggle="modal"
                                                     data-target="#edit<?=$idb?>">
