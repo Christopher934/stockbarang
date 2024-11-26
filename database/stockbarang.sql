@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 25, 2024 at 05:54 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Host: 127.0.0.1
+-- Generation Time: Nov 26, 2024 at 01:01 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,10 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `keluar` (
   `idkeluar` int(11) NOT NULL,
   `idbarang` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
   `penerima` varchar(25) NOT NULL,
-  `qty` int(11) NOT NULL
+  `qty` int(11) NOT NULL,
+  `tanggal` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `keluar`
+--
+
+INSERT INTO `keluar` (`idkeluar`, `idbarang`, `penerima`, `qty`, `tanggal`) VALUES
+(1, 1, 'Jojo', 10, '2024-11-25 07:00:11'),
+(2, 2, 'Jojo', 100, '2024-11-25 07:15:41'),
+(5, 3, 'Hans', 14991, '2024-11-25 07:51:04'),
+(8, 4, 'Hans', 80, '2024-11-25 07:58:00'),
+(9, 5, 'Hans', 1, '2024-11-26 09:02:13');
 
 -- --------------------------------------------------------
 
@@ -44,32 +55,31 @@ CREATE TABLE `keluar` (
 CREATE TABLE `masuk` (
   `idmasuk` int(11) NOT NULL,
   `idbarang` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
+  `qty` int(11) NOT NULL,
   `keterangan` varchar(25) NOT NULL,
-  `qty` int(11) NOT NULL
+  `tanggal` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `masuk`
 --
 
-INSERT INTO `masuk` (`idmasuk`, `idbarang`, `tanggal`, `keterangan`, `qty`) VALUES
-(1, 1, '2024-11-25 01:57:07', 'hans', 30),
-(8, 3, '2024-11-25 13:39:53', 'jos', 2),
-(9, 3, '2024-11-25 15:44:15', '1', 1),
-(10, 5, '2024-11-25 15:47:40', '1', 1),
-(11, 4, '2024-11-25 15:47:51', '1', 1),
-(12, 6, '2024-11-25 15:49:27', 'jojo', 9),
-(15, 7, '2024-11-25 15:54:27', 'Hans', 200),
-(16, 6, '2024-11-25 16:21:28', 'Hans', 200),
-(17, 8, '2024-11-25 16:21:39', 'Hans', 300),
-(18, 9, '2024-11-25 16:21:49', 'Buku', 200),
-(19, 12, '2024-11-25 16:21:58', 'Hans', 90),
-(20, 10, '2024-11-25 16:22:04', 'Hans', 200),
-(21, 9, '2024-11-25 16:22:11', 'Hans', 300),
-(22, 8, '2024-11-25 16:22:20', 'Hans', 200),
-(23, 7, '2024-11-25 16:22:30', 'Hans', 200),
-(24, 6, '2024-11-25 16:22:41', 'Hans', 300);
+INSERT INTO `masuk` (`idmasuk`, `idbarang`, `qty`, `keterangan`, `tanggal`) VALUES
+(2, 2, 100, 'Jojo', '2024-11-25 07:14:56'),
+(3, 3, 10000, 'hans', '2024-11-25 07:27:30'),
+(4, 0, 100, 'hans', '2024-11-25 07:51:56'),
+(5, 4, 9, 'hans', '2024-11-25 08:01:36'),
+(7, 7, 12, 'a', '2024-11-26 08:24:59'),
+(8, 6, 1, '1', '2024-11-26 08:25:17'),
+(10, 6, 1, '1', '2024-11-26 08:25:45'),
+(11, 6, 1, '1', '2024-11-26 08:25:49'),
+(12, 6, 1, '1', '2024-11-26 08:25:52'),
+(13, 6, 1, '1', '2024-11-26 08:25:56'),
+(14, 6, 1, '1', '2024-11-26 08:25:59'),
+(15, 6, 1, '1', '2024-11-26 08:26:03'),
+(17, 6, 1, '1', '2024-11-26 08:26:14'),
+(18, 6, 1, '1', '2024-11-26 08:26:26'),
+(19, 6, 1, '1', '2024-11-26 08:26:33');
 
 -- --------------------------------------------------------
 
@@ -80,23 +90,26 @@ INSERT INTO `masuk` (`idmasuk`, `idbarang`, `tanggal`, `keterangan`, `qty`) VALU
 CREATE TABLE `stock` (
   `idbarang` int(11) NOT NULL,
   `namabarang` varchar(25) NOT NULL,
-  `stock` int(11) NOT NULL,
   `deskripsi` varchar(25) NOT NULL,
-  `hargabarang` decimal(10,2) NOT NULL
+  `stock` int(11) NOT NULL,
+  `hargabarang` decimal(10,2) NOT NULL,
+  `nomorseri` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`idbarang`, `namabarang`, `stock`, `deskripsi`, `hargabarang`) VALUES
-(6, 'Pulpen', 609, 'Alat Tulis', 5000.00),
-(7, 'Buku', 500, 'Buku', 7000.00),
-(8, 'Dummy', 600, 'testing', 15000.00),
-(9, 'Dummy1', 501, 'testing', 1.00),
-(10, 'Dummy2', 300, 'Buku', 1.00),
-(11, 'Dummy3', 123, '1', 1.00),
-(12, 'Dummy4', 190, 'Dummy', 1.00);
+INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `stock`, `hargabarang`, `nomorseri`) VALUES
+(5, 'Dummy', 'Buku', 11, 1.00, '123123'),
+(6, 'Amplop', 'Buku', 11, 1.00, 'Dq123'),
+(7, 'Dummy1', 'Buku', 24, 1.00, ''),
+(8, 'Dummy2', 'Buku', 1, 1.00, ''),
+(9, 'Dummy3', 'Buku', 12, 1.00, ''),
+(10, 'Dummy4', 'Buku', 1, 1.00, ''),
+(11, 'Dummy5', 'Buku', 1, 1.00, ''),
+(14, 'Dummy8', '', 1, 1.00, 'asd'),
+(19, 'Amplop', 'Buku', 88, 88000.00, 'bujy');
 
 --
 -- Indexes for dumped tables
@@ -128,19 +141,19 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `keluar`
 --
 ALTER TABLE `keluar`
-  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `masuk`
 --
 ALTER TABLE `masuk`
-  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
