@@ -64,6 +64,7 @@ require 'function.php';
                                         <tr>
                                             <th>Tanggal</th>
                                             <th>Nama Barang</th>
+                                            <th>Nomor Seri</th>
                                             <th>Jumlah</th>
                                             <th>Penerima</th>
                                             <th>Harga Per Unit</th>
@@ -83,6 +84,7 @@ require 'function.php';
                                                 $qty = $data['qty'];
                                                 $penerima = $data['penerima'];
                                                 $hargaperunit = $data['hargabarang'];
+                                                $nomorseri = $data['nomorseri'];
 
                                                 $hargatotal = $hargaperunit * $qty;
                                                 
@@ -90,6 +92,7 @@ require 'function.php';
                                         <tr>
                                             <td><?=$tanggal;?></td>
                                             <td><?=$namabarang;?></td>
+                                            <td><?=$nomorseri;?></td>
                                             <td><?=$qty;?></td>
                                             <td><?=$penerima;?></td>
                                             <td>Rp <?=number_format($hargaperunit, 2, ',', '.');?></td>
@@ -214,10 +217,14 @@ require 'function.php';
             <!-- Modal body -->
             <form method="post">
                 <div class="modal-body">
-                    <input type="text" name="penerima" value="<?=$penerima?>" class="form-control">
-                    <br>
-                    <input type="number" name="qty" value="<?=$qty?>" class="form-control" required>
-                    <br>
+                    <div class="form-group">
+                        <label for="penerima">Penerima</label>
+                        <input type="text" name="penerima" id="penerima" value="<?=$penerima?>" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="qty">Quantity</label>
+                        <input type="number" name="qty" id="qty" value="<?=$qty?>" class="form-control" required>
+                    </div>
                     <input type="hidden" name="idb" value="<?=$idb?>">
                     <input type="hidden" name="idk" value="<?=$idk?>">
                     <button type="submit" class="btn btn-primary" name="updatebarangkeluar">Edit</button>

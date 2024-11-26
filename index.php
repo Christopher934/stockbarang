@@ -149,18 +149,28 @@ require 'function.php';
                                                     <!-- Modal body -->
                                                     <form method="post">
                                                         <div class="modal-body">
-                                                            <input type="text" name="namabarang"
-                                                                value="<?=$namabarang?>" class="form-control" required>
-                                                            <br>
-                                                            <input type="text" name="nomorseri" value="<?=$nomorseri?>"
-                                                                class="form-control">
-                                                            <br>
-                                                            <input type="text" name="deskripsi" value="<?=$deskripsi?>"
-                                                                class="form-control">
-                                                            <br>
-                                                            <input type="number" name="hargabarang" class="form-control"
-                                                                value="<?=$hargaperunit?>" required>
-                                                            <br>
+                                                            <div class="form-group">
+                                                                <label for="namabarang">Nama Barang</label>
+                                                                <input type="text" name="namabarang" id="namabarang"
+                                                                    value="<?=$namabarang?>" class="form-control"
+                                                                    required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nomorseri">Nomor Seri</label>
+                                                                <input type="text" name="nomorseri" id="nomorseri"
+                                                                    value="<?=$nomorseri?>" class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="deskripsi">Deskripsi</label>
+                                                                <input type="text" name="deskripsi" id="deskripsi"
+                                                                    value="<?=$deskripsi?>" class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="hargabarang">Harga Barang</label>
+                                                                <input type="number" name="hargabarang" id="hargabarang"
+                                                                    class="form-control" value="<?=$hargaperunit?>"
+                                                                    required>
+                                                            </div>
                                                             <input type="hidden" name="idb" value="<?=$idb?>">
 
                                                             <button type="submit" class="btn btn-primary"
