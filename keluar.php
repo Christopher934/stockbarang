@@ -66,6 +66,8 @@ require 'function.php';
                                             <th>Nama Barang</th>
                                             <th>Jumlah</th>
                                             <th>Penerima</th>
+                                            <th>Harga Per Unit</th>
+                                            <th>Harga Total</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -80,6 +82,9 @@ require 'function.php';
                                                 $namabarang = $data['namabarang'];
                                                 $qty = $data['qty'];
                                                 $penerima = $data['penerima'];
+                                                $hargaperunit = $data['hargabarang'];
+
+                                                $hargatotal = $hargaperunit * $qty;
                                                 
                                             ?>
                                         <tr>
@@ -87,6 +92,10 @@ require 'function.php';
                                             <td><?=$namabarang;?></td>
                                             <td><?=$qty;?></td>
                                             <td><?=$penerima;?></td>
+                                            <td>Rp <?=number_format($hargaperunit, 2, ',', '.');?></td>
+                                            <!-- Menampilkan harga per unit dengan format Rupiah -->
+                                            <td>Rp <?=number_format($hargatotal, 2, ',', '.');?></td>
+                                            <!-- Menampilkan harga total dengan format Rupiah -->
                                             <td>
                                                 <button type="button" class="btn btn-warning" data-toggle="modal"
                                                     data-target="#edit<?=$idk?>">
@@ -105,6 +114,23 @@ require 'function.php';
 
                                     </tbody>
                                 </table>
+                                <?php
+                                    $totalharga = 0;
+                                    $ambilsemuadatastock = mysqli_query($conn,"SELECT k.qty, s.hargabarang
+                                            FROM keluar k
+                                            JOIN stock s ON k.idbarang = s.idbarang");
+                                    while ($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                    $qty = $data['qty'];
+                                    $hargaperunit = $data['hargabarang'];
+
+                                    $hargatotal = $hargaperunit * $qty;
+                                    $totalharga += $hargatotal;
+                                    }
+                                ?>
+
+                                <h5 class="pt-2">
+                                    Total Harga Semua Barang Keluar: Rp <?=number_format($totalharga, 2, ',', '.');?>
+                                </h5>
                             </div>
                         </div>
                     </div>

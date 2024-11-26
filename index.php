@@ -91,6 +91,7 @@ require 'function.php';
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Barang</th>
+                                            <th>Nomor Seri</th>
                                             <th>Deskripsi</th>
                                             <th>Stock</th>
                                             <th>Harga Per Unit</th>
@@ -109,12 +110,13 @@ require 'function.php';
                                                 $stock = $data['stock'];
                                                 $hargaperunit = $data['hargabarang'];
                                                 $idb = $data['idbarang'];
-
+                                                $nomorseri = $data['nomorseri'];
                                                 $hargatotal = $hargaperunit * $stock;
                                             ?>
                                         <tr>
                                             <td><?=$i++;?></td>
                                             <td><?=$namabarang;?></td>
+                                            <td><?=$nomorseri?></td>
                                             <td><?=$deskripsi;?></td>
                                             <td><?=$stock;?></td>
                                             <td>Rp <?=number_format($hargaperunit, 2, ',', '.');?></td>
@@ -149,6 +151,9 @@ require 'function.php';
                                                         <div class="modal-body">
                                                             <input type="text" name="namabarang"
                                                                 value="<?=$namabarang?>" class="form-control" required>
+                                                            <br>
+                                                            <input type="text" name="nomorseri" value="<?=$nomorseri?>"
+                                                                class="form-control">
                                                             <br>
                                                             <input type="text" name="deskripsi" value="<?=$deskripsi?>"
                                                                 class="form-control">
@@ -265,6 +270,8 @@ require 'function.php';
             <form method="post">
                 <div class="modal-body">
                     <input type="text" name="namabarang" placeholder="Nama Barang" class="form-control" required>
+                    <br>
+                    <input type="text" name="nomorseri" placeholder="Nomor Seri" class="form-control">
                     <br>
                     <input type="text" name="deskripsi" placeholder="Deskripsi barang" class="form-control">
                     <br>
