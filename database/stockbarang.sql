@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 01:01 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Host: localhost
+-- Generation Time: Nov 27, 2024 at 06:02 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,11 +40,7 @@ CREATE TABLE `keluar` (
 --
 
 INSERT INTO `keluar` (`idkeluar`, `idbarang`, `penerima`, `qty`, `tanggal`) VALUES
-(1, 1, 'Jojo', 10, '2024-11-25 07:00:11'),
-(2, 2, 'Jojo', 100, '2024-11-25 07:15:41'),
-(5, 3, 'Hans', 14991, '2024-11-25 07:51:04'),
-(8, 4, 'Hans', 80, '2024-11-25 07:58:00'),
-(9, 5, 'Hans', 1, '2024-11-26 09:02:13');
+(10, 20, 'hans', 10, '2024-11-26 15:45:09');
 
 -- --------------------------------------------------------
 
@@ -60,27 +56,6 @@ CREATE TABLE `masuk` (
   `tanggal` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `masuk`
---
-
-INSERT INTO `masuk` (`idmasuk`, `idbarang`, `qty`, `keterangan`, `tanggal`) VALUES
-(2, 2, 100, 'Jojo', '2024-11-25 07:14:56'),
-(3, 3, 10000, 'hans', '2024-11-25 07:27:30'),
-(4, 0, 100, 'hans', '2024-11-25 07:51:56'),
-(5, 4, 9, 'hans', '2024-11-25 08:01:36'),
-(7, 7, 12, 'a', '2024-11-26 08:24:59'),
-(8, 6, 1, '1', '2024-11-26 08:25:17'),
-(10, 6, 1, '1', '2024-11-26 08:25:45'),
-(11, 6, 1, '1', '2024-11-26 08:25:49'),
-(12, 6, 1, '1', '2024-11-26 08:25:52'),
-(13, 6, 1, '1', '2024-11-26 08:25:56'),
-(14, 6, 1, '1', '2024-11-26 08:25:59'),
-(15, 6, 1, '1', '2024-11-26 08:26:03'),
-(17, 6, 1, '1', '2024-11-26 08:26:14'),
-(18, 6, 1, '1', '2024-11-26 08:26:26'),
-(19, 6, 1, '1', '2024-11-26 08:26:33');
-
 -- --------------------------------------------------------
 
 --
@@ -95,21 +70,6 @@ CREATE TABLE `stock` (
   `hargabarang` decimal(10,2) NOT NULL,
   `nomorseri` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `stock`
---
-
-INSERT INTO `stock` (`idbarang`, `namabarang`, `deskripsi`, `stock`, `hargabarang`, `nomorseri`) VALUES
-(5, 'Dummy', 'Buku', 11, 1.00, '123123'),
-(6, 'Amplop', 'Buku', 11, 1.00, 'Dq123'),
-(7, 'Dummy1', 'Buku', 24, 1.00, ''),
-(8, 'Dummy2', 'Buku', 1, 1.00, ''),
-(9, 'Dummy3', 'Buku', 12, 1.00, ''),
-(10, 'Dummy4', 'Buku', 1, 1.00, ''),
-(11, 'Dummy5', 'Buku', 1, 1.00, ''),
-(14, 'Dummy8', '', 1, 1.00, 'asd'),
-(19, 'Amplop', 'Buku', 88, 88000.00, 'bujy');
 
 --
 -- Indexes for dumped tables
@@ -141,19 +101,19 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `keluar`
 --
 ALTER TABLE `keluar`
-  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idkeluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `masuk`
 --
 ALTER TABLE `masuk`
-  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idmasuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
