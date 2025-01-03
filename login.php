@@ -2,20 +2,36 @@
 require 'function.php';
 
 
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $cekdatabase = mysqli_query($conn, "SELECT * FROM login where email='$email' and password='$password'");
+    // Gunakan prepared statement untuk keamanan
+    $stmt = $conn->prepare("SELECT * FROM login WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $hitung = mysqli_num_rows($cekdatabase);
+    if ($result->num_rows > 0) {
+        $data = $result->fetch_assoc();
 
-    if($hitung > 0){
-        $_SESSION['log'] = 'True';
-        header('location:index.php');
-    }else{
-        echo "<script>alert('tidak ada');</script>";
+        // Verifikasi password langsung tanpa hashing
+        if ($password === $data['password']) {
+            $_SESSION['log'] = true; // Menandai pengguna telah login
+            header('Location: index.php'); // Redirect ke halaman index
+            exit();
+        } else {
+            echo "<script>alert('Password salah!');</script>";
+        }
+    } else {
+        echo "<script>alert('Email tidak terdaftar!');</script>";
     }
+}
+
+// Jika sudah login, redirect ke halaman index
+if (isset($_SESSION['log'])) {
+    header('Location: index.php');
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -63,7 +79,9 @@ if(isset($_POST['login'])){
                                         </div>
                                     </form>
                                 </div>
-
+                                <div class="card-footer text-center py-3">
+                                    <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
+                                </div>
                             </div>
                         </div>
                     </div>

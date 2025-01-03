@@ -1,5 +1,6 @@
 <?php
 require 'function.php';
+require 'cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,9 +42,13 @@ require 'function.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Barang Keluar
                         </a>
-
+                        <a class="nav-link " href="logout.php">
+                            <div class="sb-nav-link-icon"></div>
+                            Logout
+                        </a>
                     </div>
                 </div>
+
             </nav>
         </div>
         <div id="layoutSidenav_content">

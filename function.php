@@ -7,6 +7,35 @@ $conn = mysqli_connect("localhost","root","","stockbarang");
 if (!$conn) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
+// Fungsi registrasi
+function register($email, $password, $passwordConfirm) {
+    global $conn;
+
+    // Validasi input kosong
+    if (empty($email) || empty($password) || empty($passwordConfirm)) {
+        return "All fields are required!";
+    }
+
+    // Validasi password dan konfirmasi password
+    if ($password !== $passwordConfirm) {
+        return "Passwords do not match!";
+    }
+
+    // Cek apakah email sudah terdaftar
+    $cekEmail = mysqli_query($conn, "SELECT * FROM login WHERE email='$email'");
+    if (mysqli_num_rows($cekEmail) > 0) {
+        return "Email is already registered!";
+    }
+
+    // Simpan data ke database tanpa hashing password
+    $query = "INSERT INTO login (email, password) VALUES ('$email', '$password')";
+    if (mysqli_query($conn, $query)) {
+        return "success";
+    } else {
+        return "Registration failed: " . mysqli_error($conn);
+    }
+}
+
 
 //Menambah barang baru
 if(isset($_POST['addnewbarang'])){
