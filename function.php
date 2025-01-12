@@ -37,7 +37,7 @@ function register($email, $password, $passwordConfirm) {
 }
 
 
-//Menambah barang baru
+// Menambah barang baru
 if(isset($_POST['addnewbarang'])){
     $namabarang = $_POST['namabarang'];
     $deskripsi = $_POST['deskripsi'];
@@ -45,14 +45,25 @@ if(isset($_POST['addnewbarang'])){
     $hargaperunit = $_POST['hargabarang'];
     $nomorseri = $_POST['nomorseri'];
 
-    $addtotable = mysqli_query($conn,"insert into stock (namabarang, nomorseri, deskripsi, stock,hargabarang) values('$namabarang', '$nomorseri', '$deskripsi', '$stock','$hargaperunit')");
-    if($addtotable){
-        header('location:index.php');
+    // Cek apakah nomor seri sudah ada di database
+    $cekNomorSeri = mysqli_query($conn, "SELECT * FROM stock WHERE nomorseri = '$nomorseri'");
+    if(mysqli_num_rows($cekNomorSeri) > 0) {
+        // Jika nomor seri sudah ada
+        echo "<script>alert('Nomor seri sudah ada.');</script>";
+        echo "<script>window.location.href = 'index.php';</script>";
     } else {
-        echo 'Gagal';
-        header('location:index.php');
+        // Jika nomor seri belum ada, tambahkan ke tabel
+        $addtotable = mysqli_query($conn, "INSERT INTO stock (namabarang, nomorseri, deskripsi, stock, hargabarang) 
+                                           VALUES('$namabarang', '$nomorseri', '$deskripsi', '$stock', '$hargaperunit')");
+        if($addtotable){
+            header('location:index.php');
+        } else {
+            echo 'Gagal menambahkan barang.';
+            header('location:index.php');
+        }
     }
 }
+
 
 
 //Menambah barang masuk 
